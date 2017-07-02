@@ -1,0 +1,34 @@
+{
+  "name": "meetupjs-slack-bot",
+  "version": "1.0.0",
+  "description": "Bot de slack que muestra en #general los eventos del día",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "now -e CALENDAR_API_URL=@calendar_api_url -e SLACK_WEBHOOK_URL=@slack_webhook_url --force",
+    "dev": "NODE_ENV=development micro -p ${PORT:-5656}",
+    "start": "micro"
+  },
+  "keywords": [
+    "bot",
+    "slack",
+    "events",
+    "buenos aires"
+  ],
+  "author": "durancristhian@gmail.com",
+  "engines": {
+    "node": ">= 6.6.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "got": "^7.0.0",
+    "micro": "^7.3.3",
+    "micro-cors": "0.0.4",
+    "moment-timezone": "^0.5.13",
+    "slack-node": "^0.1.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:meetupjs-ar/calendar-bot.git"
+  }
+}
