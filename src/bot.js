@@ -17,6 +17,11 @@ function executeProgram () {
     }
 }
 
+function run () {
+    // se ejecuta el programa una vez por hora
+    setInterval(executeProgram, 1000 * 60 * 60);
+}
+
 function sendSlackMessage () {
     // llamamos al API para pedir los eventos
     return got(process.env.CALENDAR_API_URL)
@@ -90,7 +95,7 @@ function sendSlackMessage () {
         .catch(error => console.error(error));
 }
 
-module.exports = function run () {
-    // se ejecuta el programa una vez por hora
-    setInterval(executeProgram, 1000 * 60 * 60);
-}
+module.exports = {
+    run,
+    sendSlackMessage
+};

@@ -4,22 +4,22 @@ if (process.env.NODE_ENV === 'development') {
     require('dotenv').config();
 }
 
+const bot = require('./src/bot');
+const { get, router } = require('microrouter');
 const microCors = require('micro-cors');
-const { send } = require('micro');
-const run = require('./program');
+const routes = require('./src/routes');
 
-const cors = microCors({
-    allowMethods: ['GET']
-});
+// configuración de cors
+const cors = microCors({ allowMethods: ['GET'] });
 
-async function handler (req, res) {
-    send(res, 200, {
-        running: true
-    });
-}
+// inicia del bot con su respectivo setInterval
+bot.run();
 
-// ejecuta el bot
-run();
-
-// expongo el endpoint para saber si el servicio está activo
-module.exports = cors(handler);
+// exponemos las rutas disponibles para este microservicio usando cors
+module.exports = cors(
+    router(
+        get('/', routes.index),
+        get('/force-calendar', routes.forceCalendar),
+        get('/*', routes.notfound)
+    )
+);

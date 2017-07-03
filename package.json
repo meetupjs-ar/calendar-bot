@@ -6,7 +6,8 @@
   "scripts": {
     "deploy": "now -e CALENDAR_API_URL=@calendar_api_url -e SLACK_WEBHOOK_URL=@slack_webhook_url --force",
     "dev": "NODE_ENV=development micro -p ${PORT:-5656}",
-    "start": "micro"
+    "start": "micro",
+    "start-dev": "nodemon --exec npm run dev"
   },
   "keywords": [
     "bot",
@@ -24,11 +25,15 @@
     "got": "^7.0.0",
     "micro": "^7.3.3",
     "micro-cors": "0.0.4",
+    "microrouter": "^2.1.1",
     "moment-timezone": "^0.5.13",
     "slack-node": "^0.1.8"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:meetupjs-ar/calendar-bot.git"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
