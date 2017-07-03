@@ -19,6 +19,7 @@ bot.run();
 module.exports = cors(
     router(
         get('/', routes.index),
+        get('/bot_avatar.jpg', routes.avatar),
         get('/force-calendar', routes.forceCalendar),
         get('/*', routes.notfound)
     )

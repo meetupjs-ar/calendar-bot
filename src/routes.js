@@ -1,5 +1,13 @@
 const bot = require('./bot');
+const fs = require('fs');
+const path = require('path');
 const { send } = require('micro');
+
+function avatar (req, res) {
+    const avatar = fs.readFileSync(path.join(__dirname, './bot_avatar.jpg'));
+
+    send(res, 200, avatar);
+}
 
 function forceCalendar (req, res) {
     // forzamos la ejecución del bot (recordar que es un proceso asíncrono)
@@ -18,6 +26,7 @@ function notfound (req, res) {
 }
 
 module.exports = {
+    avatar,
     forceCalendar,
     index,
     notfound
