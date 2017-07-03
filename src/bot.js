@@ -11,7 +11,7 @@ const ZONE = 'America/Buenos_Aires';
 function executeProgram () {
     const jobTime = moment.tz(new Date(), ZONE);
 
-    if (jobTime.hour() === process.env.HOUR) {
+    if (jobTime.hour() === parseInt(process.env.HOUR)) {
         sendSlackMessage();
     }
 }
@@ -74,9 +74,9 @@ function sendSlackMessage () {
         .then(message => {
             const messageOptions = {
                 channel: "#general",
-                icon_emoji: ":calendar:",
+                icon_emoji: process.env.BOT_AVATAR,
                 text: message,
-                username: "calendar_bot"
+                username: process.env.BOT_NAME
             };
             const slack = new Slack();
 
