@@ -11,8 +11,7 @@ const ZONE = 'America/Buenos_Aires';
 function executeProgram () {
     const jobTime = moment.tz(new Date(), ZONE);
 
-    // verifico que sean las 9 de la mañana
-    if (jobTime.hour() === 9) {
+    if (jobTime.hour() === process.env.HOUR) {
         sendSlackMessage();
     }
 }
