@@ -4,9 +4,19 @@ const path = require('path');
 const { send } = require('micro');
 
 function avatar (req, res) {
-    const avatar = fs.readFileSync(path.join(__dirname, './bot_avatar.jpg'));
+    try {
+        const filePath = path.join(
+            __dirname,
+            '..',
+            'assets',
+            `${req.params.file}.${req.params.ext}`
+        );
+        const avatar = fs.readFileSync(filePath);
 
-    send(res, 200, avatar);
+        send(res, 200, avatar);
+    } catch (error) {
+        send(res, 404, 'Not found');
+    }
 }
 
 function forceCalendar (req, res) {

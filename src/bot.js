@@ -73,7 +73,7 @@ function sendSlackMessage () {
         // envío el mensaje a Slack
         .then(message => {
             const messageOptions = {
-                channel: "#general",
+                channel: process.env.CHANNEL,
                 icon_emoji: process.env.BOT_AVATAR,
                 text: message,
                 username: process.env.BOT_NAME
