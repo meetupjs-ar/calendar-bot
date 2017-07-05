@@ -11,7 +11,7 @@ const ZONE = 'America/Buenos_Aires';
 function executeProgram () {
     const jobTime = moment.tz(new Date(), ZONE);
 
-    if (jobTime.hour() === parseInt(process.env.HOUR)) {
+    if (jobTime.hour() === 8) {
         sendSlackMessage();
     }
 }
