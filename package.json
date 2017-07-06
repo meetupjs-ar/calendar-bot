@@ -4,7 +4,6 @@
   "description": "Bot de slack que muestra en #general los eventos del día",
   "main": "index.js",
   "scripts": {
-    "deploy": "now -e BOT_AVATAR=@bot_avatar -e BOT_NAME=@bot_name -e CALENDAR_API_URL=@calendar_api_url -e HOUR=@hour -e SLACK_WEBHOOK_URL=@slack_webhook_url --force",
     "dev": "NODE_ENV=development micro -p ${PORT:-5656}",
     "start": "micro",
     "start-dev": "nodemon --exec npm run dev"
