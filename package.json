@@ -21,6 +21,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "cron": "^1.2.1",
     "dotenv": "^4.0.0",
     "got": "^7.0.0",
     "micro": "^7.3.3",

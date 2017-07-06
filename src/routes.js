@@ -19,14 +19,6 @@ function avatar (req, res) {
     }
 }
 
-function forceCalendar (req, res) {
-    // forzamos la ejecución del bot (recordar que es un proceso asíncrono)
-    bot.sendSlackMessage();
-
-    // avisamos que el proceso fue desencadenado (no confundir con terminado)
-    send(res, 200, { triggered: true });
-}
-
 function index (req, res) {
     send(res, 200, { active: true });
 }
@@ -37,7 +29,6 @@ function notfound (req, res) {
 
 module.exports = {
     avatar,
-    forceCalendar,
     index,
     notfound
 };

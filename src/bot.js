@@ -1,27 +1,49 @@
-// modulos necesarios
+const CronJob = require('cron').CronJob;
 const got = require('got');
 const moment = require('moment-timezone');
 const Slack = require('slack-node');
 
 // constantes
-const FOOTER = '\n\nPara conocer los eventos que se vienen visitá: http://meetupjs.com.ar/calendario.html';
-const HEADER = 'Estos son los eventos del día de hoy :simple_smile:\n\n\n\n\n';
+const AFTERNOON_HEADER = 'Estos son los eventos de mañana :simple_smile:\n\n\n\n\n';
+const FOOTER = '\n\nEl calendario de eventos completo lo podés mirar en http://meetupjs.com.ar/calendario.html';
+const MORNING_HEADER = 'Estos son los eventos de hoy :simple_smile:\n\n\n\n\n';
 const ZONE = 'America/Buenos_Aires';
 
-function executeProgram () {
-    const jobTime = moment.tz(new Date(), ZONE);
-
-    if (jobTime.hour() === 8) {
-        sendSlackMessage();
-    }
-}
-
 function run () {
-    // se ejecuta el programa una vez por hora
-    setInterval(executeProgram, 1000 * 60 * 60);
+    // por la mañana
+    new CronJob(
+        '00 30 08 * * *',
+        () => {
+            // genera un mensaje custom según la hora del día (mañana o tarde)
+            const messageTemplateBuilder = message => `${MORNING_HEADER}${message}${FOOTER}`;
+            // fecha para filtrar eventos (puede ser el mismo día o el día siguiente)
+            const deadline = moment(new Date(), ZONE);
+
+            sendSlackMessage(deadline, messageTemplateBuilder);
+        },
+        null,
+        true,
+        ZONE
+    );
+
+    // por la tarde
+    new CronJob(
+        '00 30 17 * * *',
+        () => {
+            // genera un mensaje custom según la hora del día (mañana o tarde)
+            const messageTemplateBuilder = message => `${AFTERNOON_HEADER}${message}${FOOTER}`;
+            // fecha para filtrar eventos (puede ser el mismo día o el día siguiente)
+            const deadline = moment(new Date(), ZONE).add(1, 'days');
+
+            sendSlackMessage(deadline, messageTemplateBuilder);
+        },
+        null,
+        true,
+        ZONE
+    );
 }
 
-function sendSlackMessage () {
+function sendSlackMessage (deadline, messageTemplateBuilder) {
     // llamamos al API para pedir los eventos
     return got(process.env.CALENDAR_API_URL)
 
@@ -38,9 +60,8 @@ function sendSlackMessage () {
         .then(currentMonthCalendar => {
             return eventsOfTheDay = currentMonthCalendar.events.filter(event => {
                 const eventDate = moment.tz(new Date(event.date), ZONE);
-                const today = moment(new Date(), ZONE);
 
-                return eventDate.isSame(today, 'days');
+                return eventDate.isSame(deadline, 'days');
             });
         })
 
@@ -68,7 +89,7 @@ function sendSlackMessage () {
         })
 
         // agrego un header y un footer
-        .then(eventsMessage => `${HEADER}${eventsMessage}${FOOTER}`)
+        .then(messageTemplateBuilder)
 
         // envío el mensaje a Slack
         .then(message => {
