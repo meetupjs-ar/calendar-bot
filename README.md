@@ -1,6 +1,6 @@
 # calendar-bot
 
-Bot de Slack que muestra los eventos del día
+Bot de slack que anuncia eventos usando el calendario de meetups
 
 ## Desarrollo
 

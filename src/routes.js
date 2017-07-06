@@ -23,6 +23,10 @@ function index (req, res) {
     send(res, 200, { active: true });
 }
 
+function info (req, res) {
+    send(res, 200, { instance: process.env.INSTANCE_NAME });
+}
+
 function notfound (req, res) {
     send(res, 404, 'Not found');
 }
@@ -30,5 +34,6 @@ function notfound (req, res) {
 module.exports = {
     avatar,
     index,
+    info,
     notfound
 };

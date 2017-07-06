@@ -19,6 +19,7 @@ bot.run();
 module.exports = cors(
     router(
         get('/', routes.index),
+        get('/info', routes.info),
         get('/assets/:file.:ext', routes.avatar),
         get('/*', routes.notfound)
     )
