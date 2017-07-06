@@ -4,9 +4,9 @@ const moment = require('moment-timezone');
 const Slack = require('slack-node');
 
 // constantes
-const AFTERNOON_HEADER = 'Estos son los eventos de mañana :simple_smile:\n\n\n\n\n';
-const FOOTER = '\n\nEl calendario de eventos completo lo podés mirar en http://meetupjs.com.ar/calendario.html';
-const MORNING_HEADER = 'Estos son los eventos de hoy :simple_smile:\n\n\n\n\n';
+const AFTERNOON_HEADER = 'Estos son los eventos de mañana :simple_smile:\n\n';
+const FOOTER = 'El calendario de eventos completo lo podés mirar en http://meetupjs.com.ar/calendario.html';
+const MORNING_HEADER = 'Estos son los eventos de hoy :simple_smile:\n\n';
 const ZONE = 'America/Buenos_Aires';
 
 function run () {
@@ -82,7 +82,7 @@ function sendSlackMessage (deadline, messageTemplateBuilder) {
                 eventsMessage = eventsMessage
                     + `*${event.eventName}*`
                     + `\n> _${event.place}_`
-                    + `\n> ${event.eventLink}\n\n\n`;
+                    + `\n> ${event.eventLink}\n\n`;
             });
 
             return eventsMessage;
