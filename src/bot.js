@@ -81,7 +81,8 @@ function sendSlackMessage (deadline, messageTemplateBuilder) {
             eventsOfTheDay.forEach(event => {
                 eventsMessage = eventsMessage
                     + `*${event.eventName}*`
-                    + `\n> _${event.place}_`
+                    // TODO: hot fix until we fix the API
+                    + (event.place ? `\n> _${event.place}_` : '')
                     + `\n> ${event.eventLink}\n\n`;
             });
 
