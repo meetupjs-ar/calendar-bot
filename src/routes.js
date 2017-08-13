@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { send } = require('micro');
 
-function avatar (req, res) {
+function avatar(req, res) {
     try {
         const filePath = path.join(
             __dirname,
@@ -19,15 +19,15 @@ function avatar (req, res) {
     }
 }
 
-function index (req, res) {
+function index(req, res) {
     send(res, 200, { active: true });
 }
 
-function info (req, res) {
+function info(req, res) {
     send(res, 200, { instance: process.env.INSTANCE_NAME });
 }
 
-function notfound (req, res) {
+function notfound(req, res) {
     send(res, 404, 'Not found');
 }
 

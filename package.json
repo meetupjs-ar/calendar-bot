@@ -1,39 +1,33 @@
 {
-  "name": "calendar-bot",
-  "version": "1.0.0",
-  "description": "Bot de slack que anuncia eventos usando el calendario de meetups",
-  "main": "index.js",
-  "scripts": {
-    "dev": "NODE_ENV=development micro -p ${PORT:-5656}",
-    "start": "micro",
-    "start-dev": "nodemon --exec npm run dev"
-  },
-  "keywords": [
-    "bot",
-    "slack",
-    "events",
-    "buenos aires"
-  ],
-  "author": "durancristhian@gmail.com",
-  "engines": {
-    "node": ">= 6.6.0"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "cron": "^1.2.1",
-    "dotenv": "^4.0.0",
-    "got": "^7.0.0",
-    "micro": "^7.3.3",
-    "micro-cors": "0.0.4",
-    "microrouter": "^2.1.1",
-    "moment-timezone": "^0.5.13",
-    "slack-node": "^0.1.8"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:meetupjs-ar/calendar-bot.git"
-  },
-  "devDependencies": {
-    "nodemon": "^1.11.0"
-  }
+    "name": "calendar-bot",
+    "version": "1.0.0",
+    "description": "Bot de slack que anuncia eventos usando el calendario de meetups",
+    "main": "index.js",
+    "scripts": {
+        "dev": "NODE_ENV=development micro-dev",
+        "start": "micro"
+    },
+    "keywords": ["bot", "slack", "events", "buenos aires"],
+    "author": "durancristhian@gmail.com",
+    "engines": {
+        "node": ">= 6.6.0"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "cron": "^1.2.1",
+        "dotenv": "^4.0.0",
+        "got": "^7.0.0",
+        "micro": "^8.0.2",
+        "micro-cors": "0.0.4",
+        "microrouter": "^2.1.1",
+        "moment-timezone": "^0.5.13",
+        "slack-node": "^0.1.8"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:meetupjs-ar/calendar-bot.git"
+    },
+    "devDependencies": {
+        "micro-dev": "^1.2.0"
+    }
 }
