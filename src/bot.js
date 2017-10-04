@@ -77,11 +77,13 @@ function sendSlackMessage(deadline, messageTemplateBuilder) {
                 let eventsMessage = '';
 
                 eventsOfTheDay.forEach(event => {
+                    const eventDate = moment.tz(new Date(event.date), ZONE).utc();
+
                     eventsMessage =
                         eventsMessage +
-                        `*${event.eventName}*` +
-                        // TODO: hot fix until we fix the API
-                        (event.place ? `\n> _${event.place}_` : '') +
+                        `*${event.eventName}*\n>` +
+                        (event.place ? ` _${event.place}_, ` : '') +
+                        `${eventDate.format('HH:mm')} hs.` +
                         `\n> ${event.eventLink}\n\n`;
                 });
 
