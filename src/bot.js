@@ -116,6 +116,5 @@ function sendSlackMessage(deadline, messageTemplateBuilder) {
 }
 
 module.exports = {
-    run,
-    sendSlackMessage
+    run
 };

@@ -1,4 +1,3 @@
-const bot = require('./bot');
 const fs = require('fs');
 const path = require('path');
 const { send } = require('micro');

@@ -7,7 +7,12 @@
         "dev": "NODE_ENV=development micro-dev",
         "start": "micro"
     },
-    "keywords": ["bot", "slack", "events", "buenos aires"],
+    "keywords": [
+        "bot",
+        "slack",
+        "events",
+        "buenos aires"
+    ],
     "author": "durancristhian@gmail.com",
     "engines": {
         "node": ">= 6.6.0"
@@ -16,10 +21,10 @@
     "dependencies": {
         "cron": "^1.2.1",
         "dotenv": "^4.0.0",
-        "got": "^7.0.0",
-        "micro": "^8.0.2",
+        "got": "^8.0.1",
+        "micro": "^9.0.2",
         "micro-cors": "0.0.4",
-        "microrouter": "^2.1.1",
+        "microrouter": "^3.0.0",
         "moment-timezone": "^0.5.13",
         "slack-node": "^0.1.8"
     },
@@ -28,6 +33,6 @@
         "url": "git@github.com:meetupjs-ar/calendar-bot.git"
     },
     "devDependencies": {
-        "micro-dev": "^1.2.0"
+        "micro-dev": "^2.1.1"
     }
 }
