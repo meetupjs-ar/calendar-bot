@@ -4,6 +4,8 @@ const moment = require('moment-timezone');
 const shuffle = require('knuth-shuffle').knuthShuffle;
 const Slack = require('slack-node');
 
+moment.locale('es');
+
 // constantes
 const AFTERNOON_HEADER = 'Estos son los eventos de mañana :simple_smile:\n\n';
 const FOOTER =
@@ -60,15 +62,21 @@ function sendSlackMessage(deadline, messageTemplateBuilder) {
             .then(res => res.body)
             // parseo los resultados
             .then(JSON.parse)
-            // selecciono el primer elemento del calendario que corresponde al mes actual
-            .then(calendars => calendars[0])
+            // selecciono el primer elemento del calendario que corresponde al mes del deadline
+            .then(calendars =>
+                calendars.filter(
+                    calendar =>
+                        calendar.when.month == deadline.format('MMMM') &&
+                        calendar.when.year == deadline.format('YYYY')
+                )
+            )
             // descarto los eventos que no pertenecen al día de hoy
-            .then(currentMonthCalendar => {
-                return (eventsOfTheDay = currentMonthCalendar.events.filter(event => {
+            .then(([currentMonthCalendar]) => {
+                return currentMonthCalendar.events.filter(event => {
                     const eventDate = moment.tz(new Date(event.date), ZONE);
 
                     return eventDate.isSame(deadline, 'days');
-                }));
+                });
             })
             // Verifico que haya eventos para mostrar
             .then(eventsOfTheDay => {

@@ -2,7 +2,7 @@
     "bots": [
         {
             "name": "calendar_bot",
-            "avatar:": ":calendar:"
+            "avatar": ":calendar:"
         }
     ]
 }
