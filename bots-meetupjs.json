@@ -1,0 +1,12 @@
+{
+    "bots": [
+        {
+            "name": "isna",
+            "avatar:": "http://meetupjs-slack-bot.now.sh/assets/isna.jpg"
+        },
+        {
+            "name": "lenny",
+            "avatar:": "http://meetupjs-slack-bot.now.sh/assets/lenny.jpg"
+        }
+    ]
+}

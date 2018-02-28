@@ -11,11 +11,11 @@ const FOOTER =
 const MORNING_HEADER = 'Estos son los eventos de hoy :simple_smile:\n\n';
 const ZONE = 'America/Buenos_Aires';
 
-function getRandomAvatar() {
-    const avatars = process.env.BOT_AVATARS.split(',');
-    const mixedAvatars = shuffle(avatars.slice(0));
+function getRandomBot() {
+    const bots = require(process.env.BOTS_PATH).bots;
+    const mixedBots = shuffle(bots.slice(0));
 
-    return mixedAvatars[0];
+    return mixedBots[0];
 }
 
 function run() {
@@ -101,11 +101,12 @@ function sendSlackMessage(deadline, messageTemplateBuilder) {
             .then(messageTemplateBuilder)
             // envío el mensaje a Slack
             .then(message => {
+                const randomBot = getRandomBot();
                 const messageOptions = {
                     channel: process.env.CHANNEL,
-                    icon_emoji: getRandomAvatar(),
+                    icon_emoji: randomBot.avatar,
                     text: message,
-                    username: process.env.BOT_NAME
+                    username: randomBot.name
                 };
                 const slack = new Slack();
 
