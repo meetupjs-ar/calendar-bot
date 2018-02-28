@@ -1,6 +1,7 @@
 const CronJob = require('cron').CronJob;
 const got = require('got');
 const moment = require('moment-timezone');
+const shuffle = require('knuth-shuffle').knuthShuffle;
 const Slack = require('slack-node');
 
 // constantes
@@ -9,6 +10,13 @@ const FOOTER =
     'El calendario de eventos completo lo podés mirar en http://meetupjs.com.ar/calendario.html';
 const MORNING_HEADER = 'Estos son los eventos de hoy :simple_smile:\n\n';
 const ZONE = 'America/Buenos_Aires';
+
+function getRandomAvatar() {
+    const avatars = process.env.BOT_AVATARS.split(',');
+    const mixedAvatars = shuffle(avatars.slice(0));
+
+    return mixedAvatars[0];
+}
 
 function run() {
     // por la mañana
@@ -95,7 +103,7 @@ function sendSlackMessage(deadline, messageTemplateBuilder) {
             .then(message => {
                 const messageOptions = {
                     channel: process.env.CHANNEL,
-                    icon_emoji: process.env.BOT_AVATAR,
+                    icon_emoji: getRandomAvatar(),
                     text: message,
                     username: process.env.BOT_NAME
                 };

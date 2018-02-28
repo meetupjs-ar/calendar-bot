@@ -17,7 +17,7 @@ Ejecutar el proyecto:
 npm i
 
 # correr el proyecto en modo desarrollo
-npm run start-dev
+npm run dev
 ```
 
 ## Licencia
