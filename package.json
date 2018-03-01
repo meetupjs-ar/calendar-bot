@@ -9,9 +9,6 @@
     },
     "keywords": ["bot", "slack", "events", "buenos aires"],
     "author": "durancristhian@gmail.com",
-    "engines": {
-        "node": ">= 6.6.0"
-    },
     "license": "MIT",
     "dependencies": {
         "cron": "^1.3.0",

@@ -6,9 +6,9 @@ Bot de slack que anuncia eventos usando el calendario de meetups
 
 Configuración de las variables de entorno:
 
-1. Duplicar el archivo `.env-template`.
-1. Renombrarlo a `.env`.
-1. Completar los valores de las variables de entorno.
+1.  Duplicar el archivo `.env-template`.
+1.  Renombrarlo a `.env`.
+1.  Completar los valores de las variables de entorno.
 
 Ejecutar el proyecto:
 
