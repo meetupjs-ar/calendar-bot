@@ -7,6 +7,10 @@
         {
             "name": "Leonardo Garcia Crespo",
             "avatar": "http://meetupjs-slack-bot.now.sh/assets/lenny.jpg"
+        },
+        {
+            "name": "Camila Cepeda",
+            "avatar": "http://meetupjs-slack-bot.now.sh/assets/cami.jpg"
         }
     ]
 }
