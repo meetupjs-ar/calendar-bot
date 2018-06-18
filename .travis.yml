@@ -20,5 +20,5 @@ after_deploy:
 - npm run scale
 matrix:
   env:
-    - BOTS_PATH='../bots-default.json' CALENDAR_API_URL='http://calendar-api.now.sh/' CHANNEL='#general' INSTANCE_NAME='meetupjs'
+    - APP_NAME='meetupjs' BOTS_PATH='../bots-default.json' CALENDAR_API_URL='http://calendar-api.now.sh/' CHANNEL='#general' INSTANCE_NAME='meetupjs-slack-bot'
     - secure: IMLSzCrA24RfCrB0oFCwZnzH6MqEe1hujkIkFL/bUfEQ3FFssrtyquumY/ybdlT7U8RoZeS0rKW+QLwHGqZS3Ec4YsQLkFhGRIKB7SFTwBqNQY0helJpzhP+S7G2j1ngpGTgLoqRp+ITWk7yAaPPoZZxwyMX9yVL9qatJH7ppn8jW+vzq+unXEpdaOEOB6Mzi9AeNlTxFu/EhZGRMlYJ7a2dSjdUZ3v2b73XhKxDxfqTsN+yZDm31m4aj253BzmjkCGzeLINN5GqqvqPhnavyi92DNCuqFOZk9LP6bUtH/I6vBbyb+pglrF/1JO/813f42MT2gna50y718/sPXnNCBZ0FKH6MNRcB0SLkzFa6jT2r0HeT/DR3+HmT/CJVxm7cnV0XGsK0yikJ7q5eTLyBwqjjnSimvVS/dR+Ae/Rgh6jglwt6olFrxmTfThIl6+MTQsCh8OFokoQ3dkJHTPUjKceKAlLCN+AAzKunlVH3bZAX1nuzs0VFPdKpKaWMMacmWNoQbiQQMwuXHTbQmIYFKuhr1xx2nP12v8ySra2wNV0qaCuyRWl1JwO8Z9a+7XSXo9N4J97fC4u5UXfMa3gHghw1b7/mVaDqMb6Ki94/bBouxYWIfGxfIv7XNMPucNuEhNmCBba9QrlgCE7OSRn+K7YTEaszxKNAPnwCod5Hos=

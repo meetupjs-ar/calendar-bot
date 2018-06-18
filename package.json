@@ -35,6 +35,8 @@
         "url": "git@github.com:meetupjs-ar/calendar-bot.git"
     },
     "devDependencies": {
+        "babel-eslint": "^8.2.3",
+        "eslint": "^4.19.1",
         "micro-dev": "^3.0.0"
     }
 }

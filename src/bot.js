@@ -1,23 +1,23 @@
-const CronJob = require('cron').CronJob;
-const got = require('got');
-const moment = require('moment-timezone');
-const shuffle = require('knuth-shuffle').knuthShuffle;
-const Slack = require('slack-node');
+const CronJob = require('cron').CronJob
+const got = require('got')
+const moment = require('moment-timezone')
+const shuffle = require('knuth-shuffle').knuthShuffle
+const Slack = require('slack-node')
 
-moment.locale('es');
+moment.locale('es')
 
 // constantes
-const AFTERNOON_HEADER = 'Estos son los eventos de mañana :simple_smile:\n\n';
+const AFTERNOON_HEADER = 'Estos son los eventos de mañana :simple_smile:\n\n'
 const FOOTER =
-    'El calendario de eventos completo lo podés mirar en http://meetupjs.com.ar/calendario.html';
-const MORNING_HEADER = 'Estos son los eventos de hoy :simple_smile:\n\n';
-const ZONE = 'America/Buenos_Aires';
+    'El calendario de eventos completo lo podés mirar en http://meetupjs.com.ar/calendario.html'
+const MORNING_HEADER = 'Estos son los eventos de hoy :simple_smile:\n\n'
+const ZONE = 'America/Buenos_Aires'
 
 function getRandomBot() {
-    const bots = require(process.env.BOTS_PATH).bots;
-    const mixedBots = shuffle(bots.slice(0));
+    const bots = require(process.env.BOTS_PATH).bots
+    const mixedBots = shuffle(bots.slice(0))
 
-    return mixedBots[0];
+    return mixedBots[0]
 }
 
 function run() {
@@ -26,32 +26,32 @@ function run() {
         '00 30 08 * * *',
         () => {
             // genera un mensaje custom según la hora del día (mañana o tarde)
-            const messageTemplateBuilder = message => `${MORNING_HEADER}${message}${FOOTER}`;
+            const messageTemplateBuilder = message => `${MORNING_HEADER}${message}${FOOTER}`
             // fecha para filtrar eventos (puede ser el mismo día o el día siguiente)
-            const deadline = moment(new Date(), ZONE);
+            const deadline = moment(new Date(), ZONE)
 
-            sendSlackMessage(deadline, messageTemplateBuilder);
+            sendSlackMessage(deadline, messageTemplateBuilder)
         },
         null,
         true,
         ZONE
-    );
+    )
 
     // por la tarde
     new CronJob(
         '00 30 17 * * *',
         () => {
             // genera un mensaje custom según la hora del día (mañana o tarde)
-            const messageTemplateBuilder = message => `${AFTERNOON_HEADER}${message}${FOOTER}`;
+            const messageTemplateBuilder = message => `${AFTERNOON_HEADER}${message}${FOOTER}`
             // fecha para filtrar eventos (puede ser el mismo día o el día siguiente)
-            const deadline = moment(new Date(), ZONE).add(1, 'days');
+            const deadline = moment(new Date(), ZONE).add(1, 'days')
 
-            sendSlackMessage(deadline, messageTemplateBuilder);
+            sendSlackMessage(deadline, messageTemplateBuilder)
         },
         null,
         true,
         ZONE
-    );
+    )
 }
 
 function sendSlackMessage(deadline, messageTemplateBuilder) {
@@ -73,65 +73,68 @@ function sendSlackMessage(deadline, messageTemplateBuilder) {
             // descarto los eventos que no pertenecen al día de hoy
             .then(([currentMonthCalendar]) => {
                 return currentMonthCalendar.events.filter(event => {
-                    const eventDate = moment.tz(new Date(event.date), ZONE);
+                    const eventDate = moment.tz(new Date(event.date), ZONE)
 
-                    return eventDate.isSame(deadline, 'days');
-                });
+                    return eventDate.isSame(deadline, 'days')
+                })
             })
             // Verifico que haya eventos para mostrar
             .then(eventsOfTheDay => {
                 if (!eventsOfTheDay.length) {
                     return Promise.reject(
                         `Hoy no hay eventos: ${moment.tz(new Date(), ZONE).format()}`
-                    );
+                    )
                 }
 
-                return eventsOfTheDay;
+                return eventsOfTheDay
             })
             // construyo un string con la información que quiero mostrar
             .then(eventsOfTheDay => {
-                let eventsMessage = '';
+                let eventsMessage = ''
 
                 eventsOfTheDay.forEach(event => {
-                    const eventDate = moment.tz(new Date(event.date), ZONE).utc();
+                    const eventDate = moment.tz(new Date(event.date), ZONE).utc()
 
                     eventsMessage =
                         eventsMessage +
                         `*${event.eventName}*\n>` +
                         (event.place ? ` _${event.place}_, ` : '') +
                         `${eventDate.format('HH:mm')} hs.` +
-                        `\n> ${event.eventLink}\n\n`;
-                });
+                        `\n> ${event.eventLink}\n\n`
+                })
 
-                return eventsMessage;
+                return eventsMessage
             })
             // agrego un header y un footer
             .then(messageTemplateBuilder)
             // envío el mensaje a Slack
             .then(message => {
-                const randomBot = getRandomBot();
+                const randomBot = getRandomBot()
                 const messageOptions = {
                     channel: process.env.CHANNEL,
                     icon_emoji: randomBot.avatar,
                     text: message,
                     username: randomBot.name
-                };
-                const slack = new Slack();
+                }
+                const slack = new Slack()
 
-                slack.setWebhook(process.env.SLACK_WEBHOOK_URL);
+                slack.setWebhook(process.env.SLACK_WEBHOOK_URL)
                 slack.webhook(messageOptions, (error, response) => {
                     if (error) {
-                        return console.error(error);
+                        // eslint-disable-next-line
+                        return console.error(error)
                     }
 
-                    return console.log(response);
-                });
+                    // eslint-disable-next-line
+                    return console.log(response)
+                })
             })
             // en caso de error, solo lo muestro por la consola
+            // eslint-disable-next-line
             .catch(error => console.error(error))
-    );
+    )
 }
 
 module.exports = {
     run
-};
+}

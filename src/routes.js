@@ -1,6 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-const { send } = require('micro');
+const fs = require('fs')
+const path = require('path')
+const { send } = require('micro')
 
 function avatar(req, res) {
     try {
@@ -9,25 +9,25 @@ function avatar(req, res) {
             '..',
             'assets',
             `${req.params.file}.${req.params.ext}`
-        );
-        const avatar = fs.readFileSync(filePath);
+        )
+        const avatar = fs.readFileSync(filePath)
 
-        send(res, 200, avatar);
+        send(res, 200, avatar)
     } catch (error) {
-        send(res, 404, 'Not found');
+        send(res, 404, 'Not found')
     }
 }
 
 function index(req, res) {
-    send(res, 200, { active: true });
+    send(res, 200, { active: true })
 }
 
 function info(req, res) {
-    send(res, 200, { instance: process.env.INSTANCE_NAME });
+    send(res, 200, { instance: process.env.APP_NAME })
 }
 
 function notfound(req, res) {
-    send(res, 404, 'Not found');
+    send(res, 404, 'Not found')
 }
 
 module.exports = {
@@ -35,4 +35,4 @@ module.exports = {
     index,
     info,
     notfound
-};
+}
