@@ -4,21 +4,30 @@
     "description": "Bot de slack que anuncia eventos usando el calendario de meetups",
     "main": "index.js",
     "scripts": {
-        "dev": "micro-dev",
+        "clean-deploys": "now rm $INSTANCE_NAME --safe --token $NOW_TOKEN --yes",
+        "deploy": "now alias $(now --name $INSTANCE_NAME -e BOTS_PATH=$BOTS_PATH -e CALENDAR_API_URL=$CALENDAR_API_URL -e CHANNEL=$CHANNEL -e INSTANCE_NAME=$INSTANCE_NAME -e SLACK_WEBHOOK_URL=$SLACK_WEBHOOK_URL --npm --token $NOW_TOKEN) $INSTANCE_NAME --token=$NOW_TOKEN",
+        "dev": "micro-dev -p ${PORT:-5000}",
+        "precommit": "eslint '**/*.js'",
+        "scale": "now scale $INSTANCE_NAME'.now.sh' 1 --token $NOW_TOKEN",
         "start": "micro"
     },
-    "keywords": ["bot", "slack", "events", "buenos aires"],
+    "keywords": [
+        "bot",
+        "slack",
+        "events",
+        "buenos aires"
+    ],
     "author": "durancristhian@gmail.com",
     "license": "MIT",
     "dependencies": {
         "cron": "^1.3.0",
-        "dotenv": "^5.0.1",
-        "got": "^8.2.0",
+        "dotenv": "^6.0.0",
+        "got": "^8.3.1",
         "knuth-shuffle": "^1.0.8",
-        "micro": "^9.1.0",
+        "micro": "^9.3.2",
         "micro-cors": "0.1.0",
-        "microrouter": "^3.0.0",
-        "moment-timezone": "^0.5.14",
+        "microrouter": "^3.1.3",
+        "moment-timezone": "^0.5.20",
         "slack-node": "^0.1.8"
     },
     "repository": {
@@ -26,6 +35,6 @@
         "url": "git@github.com:meetupjs-ar/calendar-bot.git"
     },
     "devDependencies": {
-        "micro-dev": "^2.2.0"
+        "micro-dev": "^3.0.0"
     }
 }
