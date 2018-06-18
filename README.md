@@ -1,5 +1,7 @@
 # calendar-bot
 
+[![Build Status](https://travis-ci.org/meetupjs-ar/calendar-bot.svg?branch=master)](https://travis-ci.org/meetupjs-ar/calendar-bot)
+
 Bot de slack que anuncia eventos usando el calendario de meetups
 
 ## Desarrollo
