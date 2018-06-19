@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "clean-deploys": "now rm $INSTANCE_NAME --safe --token $NOW_TOKEN --yes",
-        "deploy": "now alias $(now --name $INSTANCE_NAME -e APP_NAME=$APP_NAME -e BOTS_PATH=$BOTS_PATH -e CALENDAR_API_URL=$CALENDAR_API_URL -e CHANNEL=$CHANNEL -e INSTANCE_NAME=$INSTANCE_NAME -e SLACK_WEBHOOK_URL=$SLACK_WEBHOOK_URL --npm --token $NOW_TOKEN) $INSTANCE_NAME --token=$NOW_TOKEN",
+        "deploy": "now alias $(now --name $INSTANCE_NAME -e APP_NAME=$APP_NAME -e BOTS_PATH=$BOTS_PATH -e CALENDAR_API_URL=$CALENDAR_API_URL -e CHANNEL=$CHANNEL -e INSTANCE_NAME=$INSTANCE_NAME -e NODE_ENV=production -e SLACK_WEBHOOK_URL=$SLACK_WEBHOOK_URL --npm --token $NOW_TOKEN) $INSTANCE_NAME --token=$NOW_TOKEN",
         "dev": "micro-dev -p ${PORT:-5000}",
         "precommit": "eslint '**/*.js'",
         "scale": "now scale $INSTANCE_NAME'.now.sh' 1 --token $NOW_TOKEN",
