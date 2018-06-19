@@ -22,9 +22,9 @@ matrix:
   include:
     - os: linux
       env:
-        - APP_NAME='meetupjs' BOTS_PATH='../bots-meetupjs.json' CALENDAR_API_URL='http://calendar-api.now.sh/' CHANNEL='#general' INSTANCE_NAME='meetupjs-slack-bot'
+        - APP_NAME='meetupjs' BOTS_PATH='../bots-meetupjs.json' CALENDAR_API_URL='http://calendar-api.now.sh/' CHANNEL='#general' INSTANCE_NAME='meetupjs-slack-bot' NODE_ENV='test'
         - secure: 'IMLSzCrA24RfCrB0oFCwZnzH6MqEe1hujkIkFL/bUfEQ3FFssrtyquumY/ybdlT7U8RoZeS0rKW+QLwHGqZS3Ec4YsQLkFhGRIKB7SFTwBqNQY0helJpzhP+S7G2j1ngpGTgLoqRp+ITWk7yAaPPoZZxwyMX9yVL9qatJH7ppn8jW+vzq+unXEpdaOEOB6Mzi9AeNlTxFu/EhZGRMlYJ7a2dSjdUZ3v2b73XhKxDxfqTsN+yZDm31m4aj253BzmjkCGzeLINN5GqqvqPhnavyi92DNCuqFOZk9LP6bUtH/I6vBbyb+pglrF/1JO/813f42MT2gna50y718/sPXnNCBZ0FKH6MNRcB0SLkzFa6jT2r0HeT/DR3+HmT/CJVxm7cnV0XGsK0yikJ7q5eTLyBwqjjnSimvVS/dR+Ae/Rgh6jglwt6olFrxmTfThIl6+MTQsCh8OFokoQ3dkJHTPUjKceKAlLCN+AAzKunlVH3bZAX1nuzs0VFPdKpKaWMMacmWNoQbiQQMwuXHTbQmIYFKuhr1xx2nP12v8ySra2wNV0qaCuyRWl1JwO8Z9a+7XSXo9N4J97fC4u5UXfMa3gHghw1b7/mVaDqMb6Ki94/bBouxYWIfGxfIv7XNMPucNuEhNmCBba9QrlgCE7OSRn+K7YTEaszxKNAPnwCod5Hos='
     - os: linux
       env:
-        - APP_NAME='acamica' BOTS_PATH='../bots-default.json' CALENDAR_API_URL='http://calendar-api.now.sh/' CHANNEL='#93-events' INSTANCE_NAME='acamica-slack-bot'
+        - APP_NAME='acamica' BOTS_PATH='../bots-default.json' CALENDAR_API_URL='http://calendar-api.now.sh/' CHANNEL='#93-events' INSTANCE_NAME='acamica-slack-bot' NODE_ENV='test'
         - secure: 'MSs2sbWKkIa5pIZM9C/Hp2Qcfx0Pdu8AHlB6TQYILy9zFfGe4/0Z0y/OS7ox1huIAnyZS4ir4IPOvO352evDjNJkA0+zmsUBtlVh8jFNjEgZLICxYuRf0BUsXrkLgELJUfHa9qf2F5eP/fXoRreTm0AuU+zvZq4K8x15yDp6NDObBw6XB2hTWoCfCIGXGP6n8Om/jb+sbQh0s5tJzLgbhLN+uNPiKBMFJB65QN9sVXvV7iEpb2A3nWeUpyC+lEQ+5CUj4FTJqAIS6LwppAfmetlE52vzVp7Zdq5v4+3e8jTKxpEZj66LTlqnZfKe5KrcRMuQBWwH8wrelPjx5ciePWyNWs3aGedPVMiOs46jlIyUUHhcfG99sjD55EipOQgYPDeuwy9q/rcw0IQZhBjf+N5L3Z/I3bILv26y3b2SwI5QfdvmAeuXBcM2dttC6/l7gElYjdLnz1q1FbBA6sKRLSknmMz7JZh+cJ2EyXFjYqQPCw7CTNcyBIP2N+nisT3o3Xb3pXiupkNSvFu7+TTlp0oKqMoTkmzYXbxv0fYTNQ+KmlzjzcBjV1nfgGHKT9T+u40OVkuS8i2JfBMQo7K29gVh1nqGtu5ZaUmhpGnPHU9xTDx1Cpi4blJZvPV4mpj8eff5226QoXkzeAjh/pkfrH8nZk4ztMbAvlBTOBzzifc='
