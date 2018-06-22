@@ -17,7 +17,6 @@ deploy:
     branch: master
 after_deploy:
 - npm run scale
-- npm run clean-deploys
 matrix:
   include:
     - os: linux
