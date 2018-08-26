@@ -1,6 +1,6 @@
 # calendar-bot
 
-[![Build Status](https://travis-ci.org/meetupjs-ar/calendar-bot.svg?branch=master)](https://travis-ci.org/meetupjs-ar/calendar-bot)
+[![Build Status](https://travis-ci.org/meetupjs-ar/calendar-bot.svg?branch=master)](https://travis-ci.org/meetupjs-ar/calendar-bot) [![Greenkeeper badge](https://badges.greenkeeper.io/meetupjs-ar/calendar-bot.svg)](https://greenkeeper.io/)
 
 Bot de slack que anuncia eventos usando el calendario de meetups
 
