@@ -11,6 +11,10 @@
         {
             "name": "Camila Cepeda",
             "avatar": "http://meetupjs-slack-bot.now.sh/assets/cami.jpg"
+        },
+        {
+            "name": "Jorge Cano",
+            "avatar": "http://meetupjs-slack-bot.now.sh/assets/jorge.jpg"
         }
     ]
 }
