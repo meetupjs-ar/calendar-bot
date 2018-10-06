@@ -9,7 +9,6 @@ script:
     - npm run precommit
 before_deploy:
     - npm i now --no-save
-    - npm run clean-deploys
 deploy:
     provider: script
     script: npm run deploy
@@ -17,7 +16,8 @@ deploy:
     on:
         branch: master
 after_deploy:
-    - npm run scale
+    - npm run alias
+    - npm run clean-deploys
 matrix:
     include:
         - os: linux
