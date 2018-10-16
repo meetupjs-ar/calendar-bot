@@ -10,6 +10,9 @@ moment.locale('es')
 const AFTERNOON_HEADER = 'Estos son los eventos de mañana :simple_smile:\n\n'
 const FOOTER =
     'El calendario de eventos completo lo podés mirar en http://meetupjs.com.ar/calendario.html'
+const HODOR_FOOTER =
+    'Hodor hodor hodor hodor hodor hodor hodor hodor hodor http://meetupjs.com.ar/calendario.html'
+const HODOR_HEADER = 'Hodor hodor hodor hodor hodor hodor :simple_smile:\n\n'
 const MORNING_HEADER = 'Estos son los eventos de hoy :simple_smile:\n\n'
 const ZONE = 'America/Buenos_Aires'
 
@@ -25,12 +28,18 @@ function run() {
     new CronJob(
         '00 30 08 * * *',
         () => {
+            // obtiene el bot que va a publicar aleatoriamente
+            const randomBot = getRandomBot()
             // genera un mensaje custom según la hora del día (mañana o tarde)
-            const messageTemplateBuilder = message => `${MORNING_HEADER}${message}${FOOTER}`
+            // y el bot que publica
+            const messageTemplateBuilder = message =>
+                randomBot.name.toUpperCase() === 'HODOR'
+                    ? `${HODOR_HEADER}${message}${HODOR_FOOTER}`
+                    : `${MORNING_HEADER}${message}${FOOTER}`
             // fecha para filtrar eventos (puede ser el mismo día o el día siguiente)
             const deadline = moment(new Date(), ZONE)
 
-            sendSlackMessage(deadline, messageTemplateBuilder)
+            sendSlackMessage(deadline, messageTemplateBuilder, randomBot)
         },
         null,
         true,
@@ -41,12 +50,18 @@ function run() {
     new CronJob(
         '00 30 17 * * *',
         () => {
+            // obtiene el bot que va a publicar aleatoriamente
+            const randomBot = getRandomBot()
             // genera un mensaje custom según la hora del día (mañana o tarde)
-            const messageTemplateBuilder = message => `${AFTERNOON_HEADER}${message}${FOOTER}`
+            // y el bot que publica
+            const messageTemplateBuilder = message =>
+                randomBot.name.toUpperCase() === 'HODOR'
+                    ? `${HODOR_HEADER}${message}${HODOR_FOOTER}`
+                    : `${AFTERNOON_HEADER}${message}${FOOTER}`
             // fecha para filtrar eventos (puede ser el mismo día o el día siguiente)
             const deadline = moment(new Date(), ZONE).add(1, 'days')
 
-            sendSlackMessage(deadline, messageTemplateBuilder)
+            sendSlackMessage(deadline, messageTemplateBuilder, randomBot)
         },
         null,
         true,
@@ -54,7 +69,7 @@ function run() {
     )
 }
 
-function sendSlackMessage(deadline, messageTemplateBuilder) {
+function sendSlackMessage(deadline, messageTemplateBuilder, randomBot) {
     // llamamos al API para pedir los eventos
     return (
         got(process.env.CALENDAR_API_URL)
@@ -109,7 +124,6 @@ function sendSlackMessage(deadline, messageTemplateBuilder) {
             .then(messageTemplateBuilder)
             // envío el mensaje a Slack
             .then(message => {
-                const randomBot = getRandomBot()
                 const messageOptions = {
                     channel: process.env.CHANNEL,
                     icon_emoji: randomBot.avatar,
