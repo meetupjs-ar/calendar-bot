@@ -22,4 +22,4 @@ matrix:
     include:
         - os: linux
           env:
-              - APP_NAME='meetupjs' BOTS_PATH='../bots.json' CALENDAR_API_URL='http://calendar-api.now.sh/' CHANNEL='#general' INSTANCE_NAME='meetupjs-slack-bot' NODE_ENV='test'
+              - APP_NAME='meetupjs' BOTS_PATH='../bots.json' CALENDAR_API_URL='http://calendar-api.now.sh/' CHANNEL='#general' INSTANCE_NAME='meetupjs-slack-bot'
