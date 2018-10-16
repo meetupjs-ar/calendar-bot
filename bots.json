@@ -15,6 +15,10 @@
         {
             "name": "Jorge Cano",
             "avatar": "http://meetupjs-slack-bot.now.sh/assets/jorge.jpg"
+        },
+        {
+            "name": "Hodor",
+            "avatar": "http://meetupjs-slack-bot.now.sh/assets/hodor.jpg"
         }
     ]
 }
