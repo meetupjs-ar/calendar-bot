@@ -1,8 +1,10 @@
+require('isomorphic-fetch');
 const CronJob = require('cron').CronJob
 const got = require('got')
 const moment = require('moment-timezone')
 const shuffle = require('knuth-shuffle').knuthShuffle
 const Slack = require('slack-node')
+const gsheets = require('gsheets')
 
 moment.locale('es')
 
@@ -12,8 +14,11 @@ const FOOTER =
     'El calendario de eventos completo lo podés mirar en http://meetupjs.com.ar/calendario.html'
 const HODOR_FOOTER =
     'Hodor hodor hodor hodor hodor hodor hodor hodor hodor http://meetupjs.com.ar/calendario.html'
+const BIRTHDAY_FOOTER =
+    'Si querés que la comunidad te salude por tu cumpleaños, completá el siguiente formulario: https://docs.google.com/forms/d/e/1FAIpQLSdV9nHG84MxpvM9ewHoIUpnCHspGqcoSealCrq8ajqsAhAhWQ/viewform?usp=sf_link'
 const HODOR_HEADER = 'Hodor hodor hodor hodor hodor hodor :simple_smile:\n\n'
 const MORNING_HEADER = 'Estos son los eventos de hoy :simple_smile:\n\n'
+const BIRTHDAY_HEADER = ':tada: Hoy es el cumpleaños de: :tada:\n\n'
 const ZONE = 'America/Buenos_Aires'
 
 function getRandomBot() {
@@ -40,6 +45,7 @@ function run() {
             const deadline = moment(new Date(), ZONE)
 
             sendSlackMessage(deadline, messageTemplateBuilder, randomBot)
+            sendSlackMessageWithBirthDays(deadline);
         },
         null,
         true,
@@ -66,6 +72,57 @@ function run() {
         null,
         true,
         ZONE
+    )
+}
+
+function sendSlackMessageWithBirthDays(deadline) {
+    return (
+        // Se obtienen los cumpleaños desde un spreadsheet
+        gsheets
+            .getWorksheet(
+                process.env.REACT_APP_SPREADSHEET_ID,
+                process.env.REACT_APP_WORKSHEET_ID
+            )
+            .then(response => response.data)
+            // se filtran los cumpleaños del dia de hoy
+            .then(birthdays => birthdays.filter(
+                birthday => deadline.format("DD/MM") === moment(birthday["Fecha"], "DD/MM").format("DD/MM")
+            ))
+            // si hay alguno, se formatea el mensaje
+            .then(birthdaysOfTheDay => {
+                if (!birthdaysOfTheDay.length) {
+                    return Promise.reject('No hay cumpleaños el dia de hoy. :(');
+                }
+                return birthdaysOfTheDay.reduce((message, birthday) => {
+                    return (
+                        message +
+                        `>*${birthday['Nombre']}* - @${birthday['Usuario de Slack']}\n\n`
+                    )
+                }, '');
+            })
+            .then(message => `${BIRTHDAY_HEADER}${message}${BIRTHDAY_FOOTER}`)
+            .then(message => {
+                const messageOptions = {
+                    channel: process.env.CHANNEL,
+                    // party emoji
+                    icon_emoji: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/146/face-with-party-horn-and-party-hat_1f973.png',
+                    text: message,
+                    username: 'Cumpleaños de la comunidad !'
+                }
+                const slack = new Slack()
+
+                slack.setWebhook(process.env.SLACK_WEBHOOK_URL)
+                slack.webhook(messageOptions, (error, response) => {
+                    if (error) {
+                        // eslint-disable-next-line
+                        return console.error(error)
+                    }
+
+                    // eslint-disable-next-line
+                    return console.log(response)
+                })
+            })
+            .catch(error => console.log(error))
     )
 }
 
