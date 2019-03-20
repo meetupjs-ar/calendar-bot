@@ -18,7 +18,7 @@ function run() {
         '00 00 10 * * *',
         () => {
             // mensaje a publicar
-            const messageTemplateBuilder = message => `${BIRTHDAY_HEADER}${message}${BIRTHDAY_FOOTER}`
+            const messageTemplateBuilder = message => `${BIRTHDAY_HEADER}${message}`
             // fecha para filtrar cumpleaños del dia
             const deadline = moment(new Date(), ZONE)
 
@@ -63,7 +63,17 @@ function sendSlackMessage(deadline, messageTemplateBuilder) {
                     // party emoji
                     icon_emoji: 'http://meetupjs-slack-bot.now.sh/assets/happy-isna.jpg',
                     text: message,
-                    username: 'Cumpleaños de la comunidad !'
+                    username: 'Cumpleaños de la comunidad !',
+                    attachments: [
+                        {
+                            fallback: 'Happy Birthday !',
+                            image_url: 'http://meetupjs-slack-bot.now.sh/assets/birthday.gif',
+                            color: '#ffe45e'
+                        },
+                        {
+                            pretext: BIRTHDAY_FOOTER
+                        }
+                    ]
                 }
                 const slack = new Slack()
 
