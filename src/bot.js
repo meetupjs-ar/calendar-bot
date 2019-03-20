@@ -1,4 +1,4 @@
-require('isomorphic-fetch');
+require('isomorphic-fetch')
 const CronJob = require('cron').CronJob
 const got = require('got')
 const moment = require('moment-timezone')
@@ -45,7 +45,7 @@ function run() {
             const deadline = moment(new Date(), ZONE)
 
             sendSlackMessage(deadline, messageTemplateBuilder, randomBot)
-            sendSlackMessageWithBirthDays(deadline);
+            sendSlackMessageWithBirthDays(deadline)
         },
         null,
         true,
@@ -86,19 +86,19 @@ function sendSlackMessageWithBirthDays(deadline) {
             .then(response => response.data)
             // se filtran los cumpleaños del dia de hoy
             .then(birthdays => birthdays.filter(
-                birthday => deadline.format("DD/MM") === moment(birthday["Fecha"], "DD/MM").format("DD/MM")
+                birthday => deadline.format('DD/MM') === moment(birthday['Fecha'], 'DD/MM').format('DD/MM')
             ))
             // si hay alguno, se formatea el mensaje
             .then(birthdaysOfTheDay => {
                 if (!birthdaysOfTheDay.length) {
-                    return Promise.reject('No hay cumpleaños el dia de hoy. :(');
+                    return Promise.reject('No hay cumpleaños el dia de hoy. :(')
                 }
                 return birthdaysOfTheDay.reduce((message, birthday) => {
                     return (
                         message +
                         `>*${birthday['Nombre']}* - @${birthday['Usuario de Slack']}\n\n`
                     )
-                }, '');
+                }, '')
             })
             .then(message => `${BIRTHDAY_HEADER}${message}${BIRTHDAY_FOOTER}`)
             .then(message => {
@@ -122,6 +122,7 @@ function sendSlackMessageWithBirthDays(deadline) {
                     return console.log(response)
                 })
             })
+            // eslint-disable-next-line
             .catch(error => console.log(error))
     )
 }
