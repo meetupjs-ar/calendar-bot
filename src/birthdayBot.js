@@ -9,7 +9,7 @@ moment.locale('es')
 // constantes
 const BIRTHDAY_FOOTER =
     'Para agregar un saludito usá este formulario https://docs.google.com/forms/d/e/1FAIpQLSdV9nHG84MxpvM9ewHoIUpnCHspGqcoSealCrq8ajqsAhAhWQ/viewform'
-const BIRTHDAY_HEADER = ':tada: Hoy es el cumpleaños de: :tada:\n\n'
+const BIRTHDAY_HEADER = ':tada: :tada: :tada: Hoy es el cumpleaños de:\n\n'
 const ZONE = 'America/Buenos_Aires'
 
 function run() {
@@ -63,10 +63,10 @@ function sendSlackMessage(deadline, messageTemplateBuilder) {
                     // party emoji
                     icon_emoji: 'http://meetupjs-slack-bot.now.sh/assets/happy-isna.jpg',
                     text: message,
-                    username: 'Cumpleaños de la comunidad !',
+                    username: '¡Cumpleaños.js!',
                     attachments: [
                         {
-                            fallback: 'Happy Birthday !',
+                            fallback: 'Happy Birthday!',
                             image_url: 'http://meetupjs-slack-bot.now.sh/assets/birthday.gif',
                             color: '#ffe45e'
                         },
