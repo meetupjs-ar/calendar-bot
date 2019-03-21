@@ -15,7 +15,7 @@ const ZONE = 'America/Buenos_Aires'
 function run() {
     //10 am
     new CronJob(
-        '00 00 10 * * *',
+        '00 00 11 * * *',
         () => {
             // mensaje a publicar
             const messageTemplateBuilder = message => `${BIRTHDAY_HEADER}${message}`
@@ -31,18 +31,19 @@ function run() {
 }
 
 function sendSlackMessage(deadline, messageTemplateBuilder) {
-    return (        
+    return (
         // Se obtienen los cumpleaños desde un spreadsheet
         gsheets
-            .getWorksheet(
-                process.env.BIRTHDAYS_SPREADSHEET_ID,
-                process.env.BIRTHDAYS_WORKSHEET_ID
-            )
+            .getWorksheet(process.env.BIRTHDAYS_SPREADSHEET_ID, process.env.BIRTHDAYS_WORKSHEET_ID)
             .then(response => response.data)
             // se filtran los cumpleaños del dia de hoy
-            .then(birthdays => birthdays.filter(
-                birthday => deadline.format('DD/MM') === moment(birthday['Fecha'], 'DD/MM').format('DD/MM')
-            ))
+            .then(birthdays =>
+                birthdays.filter(
+                    birthday =>
+                        deadline.format('DD/MM') ===
+                        moment(birthday['Fecha'], 'DD/MM').format('DD/MM')
+                )
+            )
             // si hay alguno, se formatea el mensaje
             .then(birthdaysOfTheDay => {
                 if (!birthdaysOfTheDay.length) {
@@ -50,10 +51,7 @@ function sendSlackMessage(deadline, messageTemplateBuilder) {
                 }
                 return birthdaysOfTheDay.reduce((message, birthday) => {
                     const id = birthday['ID de Usuario de Slack']
-                    return (
-                        message +
-                        `> *${birthday['Nombre']}* ${id ? `- <@${id}>` : ''}\n\n`
-                    )
+                    return message + `> *${birthday['Nombre']}* ${id ? `- <@${id}>` : ''}\n\n`
                 }, '')
             })
             .then(messageTemplateBuilder)
