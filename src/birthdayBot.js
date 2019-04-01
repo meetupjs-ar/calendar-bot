@@ -11,11 +11,13 @@ const BIRTHDAY_FOOTER =
     'Para agregar un saludito usá este formulario https://docs.google.com/forms/d/e/1FAIpQLSdV9nHG84MxpvM9ewHoIUpnCHspGqcoSealCrq8ajqsAhAhWQ/viewform'
 const BIRTHDAY_HEADER = ':tada: :tada: :tada: Hoy es el cumpleaños de:\n\n'
 const ZONE = 'America/Buenos_Aires'
+const ID = 'ID de Usuario de Slack'
+const NAME = 'Nombre'
 
 function run() {
     //10 am
     new CronJob(
-        '00 00 11 * * *',
+        '00 00 10 * * *',
         () => {
             // mensaje a publicar
             const messageTemplateBuilder = message => `${BIRTHDAY_HEADER}${message}`
@@ -27,6 +29,20 @@ function run() {
         null,
         true,
         ZONE
+    )
+}
+
+function getUniqueElementsBy(arr, fn) {
+    return (
+        arr.reduce((acc, v) => {
+            let index = acc.findIndex(x => fn(v, x))
+            if (index < 0) {
+                acc.push(v)
+            }else {
+                acc.splice(index, 1, v)
+            }
+            return acc
+        }, [])
     )
 }
 
@@ -44,16 +60,33 @@ function sendSlackMessage(deadline, messageTemplateBuilder) {
                         moment(birthday['Fecha'], 'DD/MM').format('DD/MM')
                 )
             )
-            // si hay alguno, se formatea el mensaje
+            // si no hay cumpleaños, se corta el proceso.
+            // si hay, se intentan eliminar los duplicados            
             .then(birthdaysOfTheDay => {
                 if (!birthdaysOfTheDay.length) {
                     return Promise.reject('No hay cumpleaños el dia de hoy. :(')
                 }
-                return birthdaysOfTheDay.reduce((message, birthday) => {
-                    const id = birthday['ID de Usuario de Slack']
-                    return message + `> *${birthday['Nombre']}* ${id ? `- <@${id}>` : ''}\n\n`
-                }, '')
+                return birthdaysOfTheDay
             })
+            .then(birthdaysOfTheDay => 
+                getUniqueElementsBy(
+                    birthdaysOfTheDay,
+                    (a, b) => a[ID] && a[ID] === b[ID]
+                )
+            )
+            .then(birthdaysOfTheDay => 
+                getUniqueElementsBy(
+                    birthdaysOfTheDay,
+                    (a, b) => a[NAME] === b[NAME]
+                )
+            )
+            // se formatea el mensaje
+            .then(birthdaysOfTheDay =>
+                birthdaysOfTheDay.reduce((message, birthday) => {
+                    const id = birthday[ID]
+                    return message + `> *${birthday[NAME]}* ${id ? `- <@${id}>` : ''}\n\n`
+                }, '')
+            )
             .then(messageTemplateBuilder)
             .then(message => {
                 const messageOptions = {
