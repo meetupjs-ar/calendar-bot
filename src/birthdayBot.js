@@ -38,7 +38,7 @@ function getUniqueElementsBy(arr, fn) {
             let index = acc.findIndex(x => fn(v, x))
             if (index < 0) {
                 acc.push(v)
-            }else {
+            } else {
                 acc.splice(index, 1, v)
             }
             return acc
