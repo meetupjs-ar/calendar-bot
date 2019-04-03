@@ -20,7 +20,7 @@ function run() {
         '00 00 10 * * *',
         () => {
             // mensaje a publicar
-            const messageTemplateBuilder = message => `${BIRTHDAY_HEADER}${message}`
+            const messageTemplateBuilder = message => `${BIRTHDAY_HEADER}${message}\n`
             // fecha para filtrar cumpleaños del dia
             const deadline = moment(new Date(), ZONE)
 
@@ -84,7 +84,7 @@ function sendSlackMessage(deadline, messageTemplateBuilder) {
             .then(birthdaysOfTheDay =>
                 birthdaysOfTheDay.reduce((message, birthday) => {
                     const id = birthday[ID]
-                    return message + `> *${birthday[NAME]}* ${id ? `- <@${id}>` : ''}\n\n`
+                    return message + `> *${birthday[NAME]}* ${id ? `- <@${id}>` : ''}\n`
                 }, '')
             )
             .then(messageTemplateBuilder)
