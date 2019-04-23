@@ -21,12 +21,12 @@ const messageTemplateBuilder = message => `${BIRTHDAY_HEADER}${message}\n`
 async function sendMessage(req, res) {
     // Se usa un passphrase como metodo de autenticacion
     if (req.query.passphrase === process.env.PASSPHRASE) {
-        let body = [];
+        let body = []
         const deadline = moment(new Date(), ZONE)
         try {
             body = await json(req)
         } catch (e) {
-
+            // eslint-disable-next-line
         }
         sendSlackMessage(deadline, body)
         send(res, 200)
@@ -65,7 +65,7 @@ function getUniqueElementsBy(arr, fn) {
     )
 }
 
-function getBirthdaysArray(birthdaysArray) {
+function getBirthdaysArray(deadline, birthdaysArray) {
     if(Array.isArray(birthdaysArray) && birthdaysArray.length) {
         // Se obtienen los cumpleaños desde un el body del request
         // El body debe ser un array
@@ -89,7 +89,7 @@ function getBirthdaysArray(birthdaysArray) {
 
 function sendSlackMessage(deadline, to) {
     return (
-        getBirthdaysArray(to)
+        getBirthdaysArray(deadline, to)
             // si no hay cumpleaños, se corta el proceso.
             // si hay, se intentan eliminar los duplicados            
             .then(birthdaysOfTheDay => {
