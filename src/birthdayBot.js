@@ -3,6 +3,7 @@ const CronJob = require('cron').CronJob
 const moment = require('moment-timezone')
 const Slack = require('slack-node')
 const gsheets = require('gsheets')
+const { send, json } = require('micro')
 
 moment.locale('es')
 
@@ -14,17 +15,35 @@ const ZONE = 'America/Buenos_Aires'
 const ID = 'ID de Usuario de Slack'
 const NAME = 'Nombre'
 
+// mensaje a publicar
+const messageTemplateBuilder = message => `${BIRTHDAY_HEADER}${message}\n`
+
+async function sendMessage(req, res) {
+    // Se usa un passphrase como metodo de autenticacion
+    if (req.query.passphrase === process.env.PASSPHRASE) {
+        let body = [];
+        const deadline = moment(new Date(), ZONE)
+        try {
+            body = await json(req)
+        } catch (e) {
+
+        }
+        sendSlackMessage(deadline, body)
+        send(res, 200)
+    } else {
+        send(res, 401, 'Unauthorized')
+    }
+}
+
 function run() {
     //10 am
     new CronJob(
         '00 00 10 * * *',
         () => {
-            // mensaje a publicar
-            const messageTemplateBuilder = message => `${BIRTHDAY_HEADER}${message}\n`
             // fecha para filtrar cumpleaños del dia
             const deadline = moment(new Date(), ZONE)
 
-            sendSlackMessage(deadline, messageTemplateBuilder)
+            sendSlackMessage(deadline)
         },
         null,
         true,
@@ -46,9 +65,14 @@ function getUniqueElementsBy(arr, fn) {
     )
 }
 
-function sendSlackMessage(deadline, messageTemplateBuilder) {
+function getBirthdaysArray(birthdaysArray) {
+    if(Array.isArray(birthdaysArray) && birthdaysArray.length) {
+        // Se obtienen los cumpleaños desde un el body del request
+        // El body debe ser un array
+        return new Promise((resolve) => resolve(birthdaysArray))
+    }
+    // Se obtienen los cumpleaños desde un spreadsheet
     return (
-        // Se obtienen los cumpleaños desde un spreadsheet
         gsheets
             .getWorksheet(process.env.BIRTHDAYS_SPREADSHEET_ID, process.env.BIRTHDAYS_WORKSHEET_ID)
             .then(response => response.data)
@@ -60,6 +84,12 @@ function sendSlackMessage(deadline, messageTemplateBuilder) {
                         moment(birthday['Fecha'], 'DD/MM').format('DD/MM')
                 )
             )
+    )
+}
+
+function sendSlackMessage(deadline, to) {
+    return (
+        getBirthdaysArray(to)
             // si no hay cumpleaños, se corta el proceso.
             // si hay, se intentan eliminar los duplicados            
             .then(birthdaysOfTheDay => {
@@ -125,5 +155,6 @@ function sendSlackMessage(deadline, messageTemplateBuilder) {
 }
 
 module.exports = {
-    run
+    run,
+    sendMessage
 }
