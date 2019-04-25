@@ -6,12 +6,12 @@ if (process.env.NODE_ENV !== 'production') {
 
 const calendarBot = require('./src/bot')
 const birthdayBot = require('./src/birthdayBot')
-const { get, router } = require('microrouter')
+const { get, post, router } = require('microrouter')
 const microCors = require('micro-cors')
 const routes = require('./src/routes')
 
 // configuración de cors
-const cors = microCors({ allowMethods: ['GET'] })
+const cors = microCors({ allowMethods: ['GET', 'POST'] })
 
 // inicia del bot con su respectivo setInterval
 calendarBot.run()
@@ -24,6 +24,7 @@ module.exports = cors(
     router(
         get('/', routes.index),
         get('/info', routes.info),
+        post('/send/birthday-message', birthdayBot.sendMessage),
         get('/assets/:file.:ext', routes.avatar),
         get('/*', routes.notfound)
     )

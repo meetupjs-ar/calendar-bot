@@ -1,0 +1,11 @@
+// Body para enviar al endpoint de cumpleaños
+// Debe ser un array
+// Se deben respetar los mismos campos del excel (Nombre, ID)
+// El ID es opcional, se utiliza para etiquetar al usuario
+
+[
+	{
+		"Nombre": "Nombre de usuario",
+		"ID de Usuario de Slack": "ID de usuario"
+	}
+]
