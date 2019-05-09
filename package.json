@@ -1,6 +1,6 @@
 {
     "name": "calendar-bot",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "Bot de slack que anuncia eventos usando el calendario de meetups",
     "main": "index.js",
     "scripts": {
