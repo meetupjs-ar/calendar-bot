@@ -72,7 +72,7 @@ function run() {
 function sendSlackMessage(deadline, messageTemplateBuilder, randomBot) {
     // llamamos al API para pedir los eventos
     return (
-        got(process.env.CALENDAR_API_URL)
+        got(process.env.CALENDAR_API_URL + '?date=' + deadline.format('YYYY-MM-DD'))
             // obtengo el body
             .then(res => res.body)
             // parseo los resultados
