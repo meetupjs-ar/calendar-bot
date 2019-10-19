@@ -115,6 +115,7 @@ function sendSlackMessage(deadline, messageTemplateBuilder, randomBot) {
                         `*${event.eventName}*\n>` +
                         (event.place ? ` _${event.place}_, ` : '') +
                         `${eventDate.format('HH:mm')} hs.` +
+                        (event.attendeeCount ? `\n>${event.attendeeCount}` : '') +
                         `\n> ${event.eventLink}\n\n`
                 })
 
