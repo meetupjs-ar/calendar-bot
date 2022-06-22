@@ -22,7 +22,7 @@
     "dependencies": {
         "cron": "^1.7.1",
         "dotenv": "^8.0.0",
-        "got": "^9.6.0",
+        "got": "^11.8.5",
         "gsheets": "^2.0.0",
         "knuth-shuffle": "^1.0.8",
         "micro": "^9.3.4",
